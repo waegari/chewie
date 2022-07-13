@@ -143,7 +143,6 @@ class ChewieState extends State<Chewie> {
     );
     // Provider.of<OverlayManager>(context, listen: false).hideOverlay(context);
     hideOverlay();
-    print('hideOverlay called: ${hideOverlay.toString()}');
     onEnterFullScreen();
 
     if (!widget.controller.allowedScreenSleep) {
@@ -164,7 +163,6 @@ class ChewieState extends State<Chewie> {
     //     widget.controller.deviceOrientationsAfterFullScreen);
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     showOverlay();
-    print('showOverlay called: ${showOverlay.toString()}');
   }
 
   void onEnterFullScreen() {
