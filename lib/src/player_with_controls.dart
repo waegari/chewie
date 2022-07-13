@@ -1,11 +1,12 @@
 import 'dart:ui';
 
-import 'package:chewie/src/chewie_player.dart';
-import 'package:chewie/src/cupertino_controls.dart';
-import 'package:chewie/src/material_controls.dart';
+import 'package:ext_video_player/ext_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+
+import './chewie_player.dart';
+import './cupertino_controls.dart';
+import './material_controls.dart';
 
 class PlayerWithControls extends StatelessWidget {
   const PlayerWithControls({Key key}) : super(key: key);
