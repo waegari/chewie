@@ -142,7 +142,7 @@ class ChewieState extends State<Chewie> {
       pageBuilder: _fullScreenRoutePageBuilder,
     );
     // Provider.of<OverlayManager>(context, listen: false).hideOverlay(context);
-    hideOverlay;
+    hideOverlay();
     print('hideOverlay called: ${hideOverlay.toString()}');
     onEnterFullScreen();
 
@@ -163,7 +163,7 @@ class ChewieState extends State<Chewie> {
     // SystemChrome.setPreferredOrientations(
     //     widget.controller.deviceOrientationsAfterFullScreen);
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    showOverlay;
+    showOverlay();
     print('showOverlay called: ${showOverlay.toString()}');
   }
 
