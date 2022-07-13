@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:chewie/src/chewie_player.dart';
-import 'package:chewie/src/chewie_progress_colors.dart';
-import 'package:chewie/src/material_progress_bar.dart';
-import 'package:chewie/src/utils.dart';
+import 'package:ext_video_player/ext_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+
+import './chewie_player.dart';
+import './chewie_progress_colors.dart';
+import './material_progress_bar.dart';
+import './utils.dart';
 
 class MaterialControls extends StatefulWidget {
   const MaterialControls({Key key}) : super(key: key);

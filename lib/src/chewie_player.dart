@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:chewie/src/chewie_progress_colors.dart';
-import 'package:chewie/src/player_with_controls.dart';
+import 'package:ext_video_player/ext_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
+
+import './chewie_progress_colors.dart';
+import './player_with_controls.dart';
 
 typedef ChewieRoutePageBuilder = Widget Function(
   BuildContext context,
@@ -20,14 +21,18 @@ typedef ChewieRoutePageBuilder = Widget Function(
 /// `video_player` is pretty low level. Chewie wraps it in a friendly skin to
 /// make it easy to use!
 class Chewie extends StatefulWidget {
-  const Chewie({
-    Key key,
-    @required this.controller,
-  })  : assert(controller != null, 'You must provide a chewie controller'),
+  const Chewie(
+      {Key key,
+      @required this.controller,
+      @required this.hideOverlay,
+      @required this.showOverlay})
+      : assert(controller != null, 'You must provide a chewie controller'),
         super(key: key);
 
   /// The [ChewieController]
   final ChewieController controller;
+  final Function hideOverlay;
+  final Function showOverlay;
 
   @override
   ChewieState createState() {
@@ -58,10 +63,14 @@ class ChewieState extends State<Chewie> {
     super.didUpdateWidget(oldWidget);
   }
 
-  Future<void> listener() async {
+  Future<void> listener({Function hideOverlay, Function showOverlay}) async {
     if (widget.controller.isFullScreen && !_isFullScreen) {
       _isFullScreen = true;
-      await _pushFullScreenWidget(context);
+      await _pushFullScreenWidget(
+        context,
+        hideOverlay: widget.hideOverlay,
+        showOverlay: widget.showOverlay,
+      );
     } else if (_isFullScreen) {
       Navigator.of(context, rootNavigator: true).pop();
       _isFullScreen = false;
@@ -123,11 +132,16 @@ class ChewieState extends State<Chewie> {
         context, animation, secondaryAnimation, controllerProvider);
   }
 
-  Future<dynamic> _pushFullScreenWidget(BuildContext context) async {
+  Future<dynamic> _pushFullScreenWidget(
+    BuildContext context, {
+    Function hideOverlay,
+    Function showOverlay,
+  }) async {
     final TransitionRoute<void> route = PageRouteBuilder<void>(
       pageBuilder: _fullScreenRoutePageBuilder,
     );
-
+    // Provider.of<OverlayManager>(context, listen: false).hideOverlay(context);
+    hideOverlay;
     onEnterFullScreen();
 
     if (!widget.controller.allowedScreenSleep) {
@@ -144,8 +158,10 @@ class ChewieState extends State<Chewie> {
 
     SystemChrome.setEnabledSystemUIOverlays(
         widget.controller.systemOverlaysAfterFullScreen);
-    SystemChrome.setPreferredOrientations(
-        widget.controller.deviceOrientationsAfterFullScreen);
+    // SystemChrome.setPreferredOrientations(
+    //     widget.controller.deviceOrientationsAfterFullScreen);
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    showOverlay;
   }
 
   void onEnterFullScreen() {
@@ -342,10 +358,10 @@ class ChewieController extends ChangeNotifier {
   Future _initialize() async {
     await videoPlayerController.setLooping(looping);
 
-    if ((autoInitialize || autoPlay) &&
-        !videoPlayerController.value.initialized) {
-      await videoPlayerController.initialize();
-    }
+    //if ((autoInitialize || autoPlay) &&
+    //    !videoPlayerController.value.initialized) {
+    //  await videoPlayerController.initialize();
+    //}
 
     if (autoPlay) {
       if (fullScreenByDefault) {
