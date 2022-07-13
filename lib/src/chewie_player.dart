@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:ext_video_player/ext_video_player.dart';
 import 'package:flutter/material.dart';
@@ -142,6 +143,7 @@ class ChewieState extends State<Chewie> {
     );
     // Provider.of<OverlayManager>(context, listen: false).hideOverlay(context);
     hideOverlay;
+    log('hideOverlay called: ${hideOverlay.toString()}');
     onEnterFullScreen();
 
     if (!widget.controller.allowedScreenSleep) {
@@ -162,6 +164,7 @@ class ChewieState extends State<Chewie> {
     //     widget.controller.deviceOrientationsAfterFullScreen);
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     showOverlay;
+    log('showOverlay called: ${showOverlay.toString()}');
   }
 
   void onEnterFullScreen() {
