@@ -68,14 +68,31 @@ class _VideoProgressBarState extends State<VideoProgressBar> {
   Widget build(BuildContext context) {
     final ChewieController chewieController = ChewieController.of(context);
     final child = Center(
-      child: StaticProgressBar(
-        value: controller.value,
-        colors: widget.colors,
-        barHeight: widget.barHeight,
-        handleHeight: widget.handleHeight,
-        drawShadow: widget.drawShadow,
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.transparent,
+        child: CustomPaint(
+          painter: _ProgressBarPainter(
+            value: controller.value,
+            colors: widget.colors,
+            barHeight: widget.barHeight,
+            handleHeight: widget.handleHeight,
+            drawShadow: widget.drawShadow,
+          ),
+        ),
       ),
     );
+
+    // final child = Center(
+    //   child: StaticProgressBar(
+    //     value: controller.value,
+    //     colors: widget.colors,
+    //     barHeight: widget.barHeight,
+    //     handleHeight: widget.handleHeight,
+    //     drawShadow: widget.drawShadow,
+    //   ),
+    // );
 
     return chewieController.draggableProgressBar
         ? GestureDetector(
