@@ -17,7 +17,7 @@ dependencies:
     git:
       url: https://github.com/waegari/flutter_plugins
       path: packages/video_player/video_player
-      ref: video_player_2.4.7_arranged
+      ref: video_player_2.4.7_arranged_v2
   wakelock: ^0.6.2
 
 dev_dependencies:
