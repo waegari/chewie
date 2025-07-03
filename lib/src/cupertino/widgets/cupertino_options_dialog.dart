@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 
 class CupertinoOptionsDialog extends StatefulWidget {
   const CupertinoOptionsDialog({
-    Key? key,
+    super.key,
     required this.options,
     this.cancelButtonText,
-  }) : super(key: key);
+  });
 
   final List<OptionItem> options;
   final String? cancelButtonText;
@@ -21,14 +21,15 @@ class _CupertinoOptionsDialogState extends State<CupertinoOptionsDialog> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: CupertinoActionSheet(
-        actions: widget.options
-            .map(
-              (option) => CupertinoActionSheetAction(
-                onPressed: () => option.onTap!(),
-                child: Text(option.title),
-              ),
-            )
-            .toList(),
+        actions:
+            widget.options
+                .map(
+                  (option) => CupertinoActionSheetAction(
+                    onPressed: () => option.onTap(context),
+                    child: Text(option.title),
+                  ),
+                )
+                .toList(),
         cancelButton: CupertinoActionSheetAction(
           onPressed: () => Navigator.pop(context),
           isDestructiveAction: true,
